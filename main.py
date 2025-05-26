@@ -4,11 +4,12 @@ app = Flask(__name__)
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
-    body = request.get_json()
-    
-    # ✅ 加入這一行來印出 userId
-    print("📩 收到 LINE 事件：")
-    print(body)  # ✅ 顯示完整 JSON 結構
+    try:
+        body = request.get_data(as_text=True)
+        print("📩 原始內容：")
+        print(body)
+    except Exception as e:
+        print("❌ 錯誤：", e)
 
     return "OK"
 
