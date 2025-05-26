@@ -4,12 +4,12 @@ app = Flask(__name__)
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
-    try:
-        body = request.get_data(as_text=True)
-        print("📩 原始內容：")
-        print(body)
-    except Exception as e:
-        print("❌ 錯誤：", e)
+    # 這行強制解析 JSON
+    data = request.get_json(force=True)
+
+    print("===== Webhook Triggered =====")
+    print(data)  # ✅ 印出完整 JSON 結構
+    print("=============================")
 
     return "OK"
 
